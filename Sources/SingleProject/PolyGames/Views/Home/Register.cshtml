@@ -1,0 +1,49 @@
+﻿@model RegisterModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2 class="text-center">Register</h2>
+<div class="row">
+    <div class="col-sm-12 col-md-3 col-lg-4"></div>
+    <div class="col-sm-12 col-md-6 col-lg-4">
+        @RenderPage("~/Views/Shared/_Notif.cshtml")
+        <div class="card bg-dark">
+            <div class="card-body">
+                @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <fieldset>
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Name, htmlAttributes: new { @class = "form-label" })
+                            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Name, null, htmlAttributes: new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "form-label" })
+                            @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Email, null, htmlAttributes: new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Password, htmlAttributes: new { @class = "form-label" })
+                            @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Password, null, htmlAttributes: new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Code, htmlAttributes: new { @class = "form-label" })
+                            @Html.EditorFor(m => m.Code, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Code, null, htmlAttributes: new { @class = "text-danger" })
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-3 col-lg-4"></div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

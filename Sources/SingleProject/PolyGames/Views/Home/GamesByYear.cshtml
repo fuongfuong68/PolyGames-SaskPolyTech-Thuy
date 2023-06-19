@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Game>
+
+@{
+    ViewBag.Title = "GamesByYear";
+}
+
+<h2 class="text-center">Games Created in @((Model as List<Game>)[0].Year)</h2>
+
+<table>
+    @foreach (Game game in Model)
+    {
+        <tr>
+            <td><img src="@Url.Content(game.PictureFilePathOne)" alt="" class="gameImage" height=100 width=100></td>
+            <td style="border:medium">
+
+                <div id="mydiv">
+                    &nbsp; @Html.ActionLink(game.GameName, "Game", new { Id = game.Id })
+                </div>
+                &nbsp; @Html.Raw(game.Description)&nbsp;&nbsp;
+
+            </td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    }
+</table>

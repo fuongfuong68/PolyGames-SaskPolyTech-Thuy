@@ -1,0 +1,37 @@
+﻿@{
+    List<Game> games = ViewBag.Games;
+}
+
+<div class="card bg-dark">
+    <div class="card-header">
+        <p class="m-0">Games Information</p>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-responsive">
+            <thead>
+                <tr class="text-center">
+                    <th>Game Name</th>
+                    <th>Group Name</th>
+                    <th>Year</th>
+                    <th>Executable File Name</th>
+                    <th>Executable File Size</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Game game in games)
+                {
+                    <tr>
+                        <td hidden>@game.Id</td>
+                        <td hidden>@game.GroupId</td>
+                        <td hidden>@game.ExecutableId</td>
+                        <td>@game.GameName</td>
+                        <td>@game.GroupName</td>
+                        <td>@game.Year</td>
+                        <td>@game.ExecutableFileName</td>
+                        <td>@game.ExecutableFileSize KB</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

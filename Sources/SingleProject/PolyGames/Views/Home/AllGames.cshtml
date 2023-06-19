@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Game>
+@{
+    ViewBag.Title = "All games";
+}
+
+<h2 class="text-center">All BIS Video Games</h2>
+
+<table>
+    @foreach (Game game in Model)
+    {
+
+        <tr onclick="location.href = '@Url.Action("Game", "Home", new { Id = game.Id })'">
+
+
+            <td><img src="@Url.Content(game.GamePictures[0].PictureFilePath)" class="gameImage" alt="" height=100 width=100 /></td>
+            <td style="border:medium">
+
+                <div id="mydiv">
+                    &nbsp; @Html.ActionLink(game.GameName, "Game", new { Id = game.Id })
+                </div>
+                &nbsp; @Html.Raw(game.Description) &nbsp;&nbsp;
+
+            </td>
+        </tr>
+        <tr class="ab"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        //This is an empty row to create a space in between each game
+    }
+</table>

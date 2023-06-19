@@ -1,0 +1,16 @@
+﻿@model AccessCode
+
+<div class="card bg-dark">
+    <div class="card-header">
+        <p class="m-0">Create an access code</p>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("AddAccessCode", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Game>
+
+@{
+    ViewBag.Title = "All years";
+}
+
+<h2 class="text-center">Years</h2>
+
+<div class="item-list">
+
+    @foreach (Game game in Model)
+    {
+        <div class="item m-2" onclick="location.href = '@Url.Action("GamesByYear", new { Year = game.Year })';">
+            @Html.ActionLink(game.Year.ToString(), "GamesByYear", new { Year = game.Year })
+        </div>
+    }
+</div>

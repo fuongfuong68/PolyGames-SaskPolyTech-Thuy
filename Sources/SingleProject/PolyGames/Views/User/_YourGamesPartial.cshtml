@@ -1,0 +1,41 @@
+﻿@model List<Game>
+
+<div class="card bg-dark mt-5">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <p class="m-0 d-flex justify-content-start">Your Games</p>
+            <a class="btn btn-sm btn-primary" href="@Url.Action("AddGame", "User")">Add A Game</a>
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("UpdateIsHidden", "User", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr class="text-center">
+                        <th>Team Name</th>
+                        <th>Click to view game/edit</th>
+                        <th>Check to hide your name from public</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <td>@Model[i].GroupName</td>
+                            <td><a href="@Url.Action("Game", "Home", new {id = Model[i].Id })">@Model[i].GameName</a></td>
+                            <td>
+                                @Html.CheckBoxFor(model => model[i].IsHidden)
+                                @Html.HiddenFor(model => model[i].Id)
+                                @Html.HiddenFor(model => model[i].GroupId)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <button type="submit" class="btn btn-success">Update</button>
+        }
+    </div>
+</div>

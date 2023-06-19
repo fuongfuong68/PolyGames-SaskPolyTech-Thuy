@@ -1,0 +1,85 @@
+﻿@model NewUserModel
+
+<div class="card bg-dark">
+    <div class="card-header">
+        <p class="m-0">Add new user</p>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("AddUser", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label white-label" })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.Name, null, htmlAttributes: new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label white-label" })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.Email, null, htmlAttributes: new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label white-label" })
+                        <div class="input-group">
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, null, htmlAttributes: new { @class = "text-danger" })
+                            <div class="input-group-append">
+                                <span class="input-group-text text-danger" onclick="loadRandomPassword();">Generate</span>
+                                <span class="input-group-text text-success" onclick="copyPassword();">Copy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label white-label" })
+                        @Html.EditorFor(model => model.RegistrationDate, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                        @Html.ValidationMessageFor(m => m.RegistrationDate, null, htmlAttributes: new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsAdmin, htmlAttributes: new { @class = "control-label white-label" })
+                        @Html.CheckBoxFor(model => model.IsAdmin)
+                        @Html.ValidationMessageFor(m => m.IsAdmin, null, htmlAttributes: new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label white-label" })
+                        @Html.CheckBoxFor(model => model.IsActive)
+                        @Html.ValidationMessageFor(m => m.IsActive, null, htmlAttributes: new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PasswordResetRequest, htmlAttributes: new { @class = "control-label white-label" })
+                        @Html.CheckBoxFor(model => model.PasswordResetRequest)
+                        @Html.ValidationMessageFor(m => m.PasswordResetRequest, null, htmlAttributes: new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GroupId, htmlAttributes: new { @class = "control-label white-label" })
+                        @Html.DropDownListFor(modelItem => modelItem.GroupId, (SelectList)ViewBag.GroupList, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.GroupId, null, htmlAttributes: new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

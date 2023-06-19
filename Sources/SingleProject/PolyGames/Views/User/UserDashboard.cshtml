@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "UserPage";
+}
+
+<h2 class="text-center">User Dashboard</h2>
+
+@RenderPage("~/Views/Shared/_Notif.cshtml")
+
+@Html.Partial("_UpdatePasswordPartial")
+
+@Html.Partial("_YourGamesPartial", (IEnumerable<Game>)ViewBag.Games)
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

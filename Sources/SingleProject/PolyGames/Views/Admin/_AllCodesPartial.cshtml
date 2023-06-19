@@ -1,0 +1,32 @@
+﻿@{
+    List<AccessCode> codes = ViewBag.AccessCodes;
+}
+
+<div class="card bg-dark mt-5">
+    <div class="card-header">
+        <p class="m-0">Access Codes</p>
+    </div>
+    <div class="card-body">
+        <p class="text-warning">The expired access codes have been deleted.</p>
+        <table class="table table-bordered table-responsive">
+            <thead>
+                <tr class="text-center">
+                    <th>Code</th>
+                    <th>ExpirationDate</th>
+                    <th>IsExpired</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (AccessCode code in codes)
+                {
+                    <tr>
+                        <td>@code.Code</td>
+                        <td>@code.ExpirationDate</td>
+                        <td>@code.IsExpired</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

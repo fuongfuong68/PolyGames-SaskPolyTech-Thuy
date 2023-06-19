@@ -1,0 +1,194 @@
+﻿body {
+    background-color: #171a21;
+}
+
+.body-content {
+    margin-top: 90px !important;
+}
+
+.navbar-custom {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-color: #1b2525 !important;
+}
+
+@media screen and (min-width: 900px) {
+    .navbar-custom {
+        padding-left: 60px !important;
+        padding-right: 60px !important;
+        background-color: #1b2525 !important;
+    }
+}
+
+h1 {
+    color: #9400D3 !important;
+    vertical-align: top;
+}
+
+h2 {
+    color: #9400D3 !important;
+}
+
+h3 {
+    color: #FFFFFF !important;
+}
+
+p, label, td, th {
+    color: #FFFFFF !important;
+}
+
+.item {
+    padding: 10px;
+    border-color: #524e4e !important;
+    border: 1px solid;
+    background-color: #171a21 !important;
+}
+
+    .item:hover {
+        background-color: #2d2b2b !important;
+    }
+
+.card-custom {
+    background-color: #171a21 !important;
+    border-radius: 10px;
+    border: 1px solid #aca5a5;
+}
+
+.dropbtn {
+    background-color: #222222;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #b9bdb9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #18191A;
+}
+
+/*.testbody {
+    background-color: #171a21;
+}
+
+.testtext {
+    color: white;
+}
+
+.white-label {
+    color: #FFFFFF !important;
+}
+
+.black-label {
+    color: #000000;
+}*/
+
+/* Set padding to keep content from hitting the edges */
+/*.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #171a21;
+}*/
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+/*.dl-horizontal dt {
+    white-space: normal;
+}*/
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+p1 {
+    vertical-align: top;
+    font-size: smaller;
+    vertical-align: text-top;
+}
+
+#mydiv a {
+    color: purple;
+    vertical-align: text-top;
+    font-size: x-large;
+    align-items: start;
+}
+
+tr:hover {
+    background: rgba(0,0,0,0.4);
+}
+
+
+.ab:hover {
+    background: #171a21;
+}
+
+
+.gameImage:hover {
+    transform: scale(4.0);
+}
+
+p2 {
+    vertical-align: top;
+    font-size: x-large;
+    vertical-align: text-top;
+    color: rebeccapurple;
+}
+
+#recentdiv a {
+    font-size: large;
+    vertical-align: text-top;
+    color: purple;
+}
+
+#recentdiv {
+    text-align: center;
+}
+
+
+
+.carousel-inner img {
+    width: 100%;*/ /* Set width to 100% */
+    /*margin: auto;*/
+    /*margin-left: 2em;*/
+/*}
+
+
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+}*/

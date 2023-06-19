@@ -1,0 +1,133 @@
+﻿@{
+    List<User> users = ViewBag.Users;
+}
+
+<div class="card bg-dark mt-5">
+    <div class="card-header">
+        <p class="m-0">User list</p>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-responsive">
+            <tr class="black-label">
+                @using (Html.BeginForm("LoadUserMgrView", "Admin", FormMethod.Get))
+                {
+                    <td colspan="2">
+                        @Html.Hidden("editableOn", (int?)ViewBag.EditableOn)
+                        <b class="white-label">Filter By Registration Years: </b>@Html.DropDownList("registrationYear", (SelectList)ViewBag.RegistrationYears, "All", new { @onchange = "this.form.submit();" })
+                    </td>
+                    <td colspan="6"><b class="white-label">Filter By Team: </b>@Html.DropDownList("groupId", (SelectList)ViewBag.Grouplist, "All", new { @onchange = "this.form.submit();" })</td>
+                }
+            </tr>
+            <tr class="text-center">
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Current Teams</th>
+                <th>Registration date</th>
+                <th>Is Active</th>
+                <th>Is Admin</th>
+                <th>Pwd Reset Req</th>
+                <th colspan="2">Controls</th>
+            </tr>
+            @foreach (User user in users)
+            {
+                if (ViewBag.EditableOn == null || ViewBag.EditableOn != user.MemberID)
+                {
+                    <tr id="row_@user.MemberID">
+                        <td hidden>@user.MemberID</td>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>@Html.Raw("**************")</td>
+                        <td>
+                            @for (int m = 0; m < user.CurrentTeamName.Count; m++)
+                            {
+                                @user.CurrentTeamName[m].GroupName
+                            }
+                        </td>
+                        <td>@user.RegistrationDate</td>
+                        <td>@user.IsActive</td>
+                        <td>@user.IsAdmin</td>
+                        <td>@user.PasswordResetRequest</td>
+                        <td>
+                            <a class="btn btn-sm btn-link" href="@Url.Action("LoadUserMgrView", "Admin", new { editableOn = user.MemberID, registrationYear = ViewBag.RegistrationYear, groupId = ViewBag.GroupId })">Edit</a>
+                            <button class="btn btn-sm btn-link" form="delete_@user.MemberID">Delete</button>
+                            @using (Html.BeginForm("DeleteUser", "Admin", new { memberId = user.MemberID }, FormMethod.Post, htmlAttributes: new { @id = $"delete_{user.MemberID}" }))
+                            {
+                                @Html.AntiForgeryToken()
+                            }
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    using (Html.BeginForm("EditUser", "Admin", new { memberId = user.MemberID }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <tr id="row_@user.MemberID">
+                            <td hidden>
+                                @Html.Hidden("MemberID", user.MemberID)
+                                @Html.Hidden("focusOnElementId", $"row_{user.MemberID}")
+                                @if (ViewBag.RegistrationYear != null)
+                                {
+                                    @Html.Hidden("registrationYear", (int)ViewBag.RegistrationYear)
+                                }
+
+                                @if (ViewBag.GroupId != null)
+                                {
+                                    @Html.Hidden("filteredGroupId", (int)ViewBag.GroupId)
+                                }
+                            </td>
+                            <td>@Html.TextBox("Name", user.Name, htmlAttributes: new { @autofocus = "autofocus" })</td>
+                            <td>@Html.TextBox("Email", user.Email)</td>
+                            <td>@Html.TextBox("Password", user.Password)</td>
+                            <td>
+                                @if (user.CurrentTeamName.Count == 0)
+                                {
+                                    @Html.DropDownList("newGroupId", (SelectList)ViewBag.GroupList, htmlAttributes: new { @id = $"assignNewGroup_User{user.MemberID}" })
+                                    <button type="button" class="btn btn-link" onclick="assignNewGroup(@user.MemberID)">Assign</button>
+                                }
+                                else
+                                {
+                                    for (int groupIndex = 0; groupIndex < user.CurrentTeamName.Count; groupIndex++)
+                                    {
+                                        <select id="@($"selectedGroupId_User{user.MemberID}")">
+                                            @foreach (SelectListItem item in (SelectList)ViewBag.GroupList)
+                                            {
+                                                if (item.Value == user.CurrentTeamName[0].GroupId.ToString())
+                                                {
+                                                    <option selected value="@item.Value">@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
+                                        </select>
+                                        <button type="button" class="btn btn-link" onclick="deleteAssignedGroup(@user.MemberID, @user.CurrentTeamName[0].GroupId)">Delete</button>
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @Html.TextBox("RegistrationDate", user.RegistrationDate, htmlAttributes: new { @disabled = true })
+                            </td>
+                            <td>@Html.CheckBox("IsActive", user.IsActive)</td>
+                            <td>@Html.CheckBox("IsAdmin", user.IsAdmin)</td>
+                            <td>@Html.CheckBox("PasswordResetRequest", user.IsAdmin)</td>
+                            <td>
+                                <button type="submit" class="btn btn-sm btn-link">Submit</button>
+                                <a class="btn btn-sm btn-link" href="@Url.Action("LoadUserMgrView", "Admin", new { registrationYear = ViewBag.RegistrationYear, groupId = ViewBag.GroupId, focusOnElementId = $"row_{user.MemberID}" })">Cancel</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+
+            @if (users.Count == 0)
+            {
+                <tr style="text-align:center">
+                    <td colspan="8"><h4><b>No Records to display</b></h4></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

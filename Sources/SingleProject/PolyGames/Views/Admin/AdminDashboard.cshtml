@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Admin dashboard";
+}
+
+@RenderPage("~/Views/Shared/_AdminMenu.cshtml")
+
+<div class="row mt-5">
+    <div class="col-sm-12 col-md-4 col-lg-4">
+        <div class="card bg-dark m-2">
+            <div class="card-header">
+                <p class="m-0">Number of users</p>
+            </div>
+            <div class="card-body">
+                <h3 class="text-center">@ViewBag.UserNumber</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-4">
+        <div class="card bg-dark m-2">
+            <div class="card-header">
+                <p class="m-0">Number of groups</p>
+            </div>
+            <div class="card-body">
+                <h3 class="text-center">@ViewBag.GroupNumber</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-4">
+        <div class="card bg-dark m-2">
+            <div class="card-header">
+                <p class="m-0">Number of games</p>
+            </div>
+            <div class="card-body">
+                <h3 class="text-center">@ViewBag.GameNumber</h3>
+            </div>
+        </div>
+    </div>
+</div>

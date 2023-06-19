@@ -1,0 +1,139 @@
+﻿@model Game
+@{
+    ViewBag.Title = "Edit Game";
+}
+
+<h2 class="text-center">Edit Game</h2>
+
+@using (Html.BeginForm("EditGame", "User", FormMethod.Post, new { encType = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card bg-dark">
+        <div class="card-header">
+            <p class="m-0">Basic Info</p>
+        </div>
+        <div class="card-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GameName, htmlAttributes: new { @class = "control-label white-label" })
+                    @Html.EditorFor(model => model.GameName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.GameName, null, htmlAttributes: new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "control-label white-label" })
+                    @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Year, null, htmlAttributes: new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label white-label" })
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Description, null, htmlAttributes: new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.HtmlVersionLink, htmlAttributes: new { @class = "control-label white-label" })
+                    @Html.EditorFor(model => model.HtmlVersionLink, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.HtmlVersionLink, null, htmlAttributes: new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card bg-dark mt-3">
+        <div class="card-header">
+            <p class="m-0">Development Team</p>
+        </div>
+        <div class="card-body">
+            @Html.HiddenFor(model => model.GroupId)
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GroupName, "Team Name: ", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.GroupName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.GroupName, null, htmlAttributes: new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="row">
+                    @for (int i = 0; i < Model.GroupMembers.Count; i++)
+                    {
+                        <div class="col-sm-12 col-mg-4 col-lg-4">
+                            <div class="card form-group bg-info">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.GroupMembers[i].StudentName, "Group Member: ", htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.GroupMembers[i].StudentName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                        @Html.ValidationMessageFor(model => model.GroupMembers[i].StudentName, null, htmlAttributes: new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.GroupMembers[i].StudentRole, "Member Role: ", htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.GroupMembers[i].StudentRole, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                        @Html.ValidationMessageFor(model => model.GroupMembers[i].StudentRole, null, htmlAttributes: new { @class = "text-danger" })
+                                    </div>
+                                    @Html.HiddenFor(model => model.GroupMembers[i].MemberId)
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card bg-dark mt-3">
+        <div class="card-header">
+            <p class="m-0">Resources</p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="mt-1">
+                        <p>Pictures:</p>
+                        @foreach (var item in Model.GamePictures)
+                        {
+                            <img src="@Url.Content(@item.PictureFilePath)" alt="" class="gameImage" height=100 width=100 />@*</a>*@
+                        }
+                    </div>
+                    
+                    <div class="mt-1">
+                        <p>Video:</p>
+                        <video style="width: 100%; height: auto;" controls autoplay>
+                            <source src="@Url.Content(@Model.GameVideos[0].VideoFilePath)" type="video/mp4" />
+                        </video>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PicturesUpload, "Upload new pictures: ", htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.PicturesUpload, new { type = "file", @class = "form-control", multiple = "true", accept = "image/jpeg, image/png" })
+                        @Html.ValidationMessageFor(model => model.PicturesUpload, null, htmlAttributes: new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.VideoUpload, "Upload new video: ", htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.VideoUpload, new { type = "file", @class = "form-control", accept = "video/mp4" })
+                        @Html.ValidationMessageFor(model => model.VideoUpload, null, htmlAttributes: new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ExecutableUpload, "Upload new executable: ", htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.ExecutableUpload, new { type = "file", @class = "form-control", accept = ".zip" })
+                        @Html.ValidationMessageFor(model => model.VideoUpload, null, htmlAttributes: new { @class = "text-danger" })
+                    </div>    
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card bg-dark mt-3">
+        <div class="card-header">
+            <p class="m-0">Actions</p>
+        </div>
+        <div class="card-body">
+            <button type="submit" class="btn btn-success">Submit</button>
+            <a class="btn btn-danger" href="@Url.Action("Game", "Home", new { id = Model.Id })">Cancel</a>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

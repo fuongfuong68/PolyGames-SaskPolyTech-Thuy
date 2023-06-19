@@ -1,0 +1,78 @@
+﻿@model Game
+
+@{
+    ViewBag.Title = "Add a Game";
+}
+
+<h2 class="text-center">Add a Game</h2>
+
+@RenderPage("~/Views/Shared/_Notif.cshtml")
+
+<div class="card bg-dark">
+    <div class="card-header">
+        <p class="m-0">Add a Game</p>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("AddGame", "User", FormMethod.Post, new { encType = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.HiddenFor(model => model.GroupId)
+            <div class="form-group">
+                @Html.LabelFor(model => model.GameName, htmlAttributes: new { @class = "control-label white-label" })
+                @Html.EditorFor(model => model.GameName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.GameName, null, htmlAttributes: new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label white-label" })
+                @Html.TextAreaFor(model => model.Description, new { @rows = 4, @cols = 10, @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.Description, null, htmlAttributes: new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "control-label white-label" })
+                @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Year, null, htmlAttributes: new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.HtmlVersionLink, htmlAttributes: new { @class = "control-label white-label" })
+                @Html.EditorFor(model => model.HtmlVersionLink, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.HtmlVersionLink, null, htmlAttributes: new { @class = "text-danger" })
+            </div>
+        </div>
+            <div class="form-horizontal">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PicturesUpload, htmlAttributes: new { @class = "control-label white-label" })
+                            @Html.TextBoxFor(model => model.PicturesUpload, new { @type = "file", @class = "form-control", required = "required", multiple = "true", accept = "image/png, image/jpeg" })
+                            @Html.ValidationMessageFor(model => model.PicturesUpload, null, htmlAttributes: new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.VideoUpload, htmlAttributes: new { @class = "control-label white-label" })
+                            @Html.TextBoxFor(model => model.VideoUpload, new { @type = "file", @class = "form-control", required = "required", accept = "video/mp4" })
+                            @Html.ValidationMessageFor(model => model.VideoUpload, null, htmlAttributes: new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ExecutableUpload, htmlAttributes: new { @class = "control-label white-label" })
+                            @Html.TextBoxFor(model => model.ExecutableUpload, new { type = "file", @class = "form-control", required = "required", accept = ".zip" })
+                            @Html.ValidationMessageFor(model => model.ExecutableUpload, null, htmlAttributes: new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

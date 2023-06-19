@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Game manager page";
+}
+
+@RenderPage("~/Views/Shared/_AdminMenu.cshtml")
+
+<h3 class="text-center mt-5">Game Manager Page</h3>
+
+@RenderPage("~/Views/Shared/_Notif.cshtml")
+
+@Html.Partial("_AllGamesPartial")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

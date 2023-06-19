@@ -1,0 +1,115 @@
+﻿@model Game
+
+@{
+    ViewBag.Title = "Game";
+    bool isUserMatch = ViewBag.IsUserMatch == null ? false : (bool)ViewBag.IsUserMatch;
+}
+
+<h2 class="text-center">@Model.GameName</h2>
+
+<div class="row mt-5">
+    <div class="col-sm-12 col-md-5 col-lg-5">
+        <div class="video">
+            <video style="width:100%; height:auto;" controls autoplay>
+                <source src="@Url.Content(@Model.GameVideos[0].VideoFilePath)" type="video/mp4" />
+            </video>
+        </div>
+        <div class="image mt-3">
+            @foreach (var item in Model.GamePictures)
+            {
+                <img src="@Url.Content(@item.PictureFilePath)" alt="" class="gameImage mx-2 my-2" height="100" width="100" />
+            }
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-7 col-lg-7">
+        <div class="content px-3">
+            <h4><b style="color: #9400D3 !important;">Game Name:</b></h4>
+            <p>@Model.GameName</p>
+            <h4><b style="color: #9400D3 !important;">Year:</b></h4>
+            <p>@Model.Year</p>
+            <h4><b style="color: #9400D3 !important;">Game Description:</b></h4>
+            <p>@Model.Description</p>
+            <h4><b style="color: #9400D3 !important;">Development Team:</b></h4>
+            <p>Team Name: @Model.GroupName</p>
+            <p>Members: </p>
+            <ul>
+                @foreach (var item in Model.GroupMembers.Where(item => !item.IsHidden))
+                {
+                    <li class="text-white">@item.StudentName, @item.StudentRole</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+@if ((bool)ViewBag.IsUserMatch)
+{
+    <div class="row mt-5">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="card bg-dark">
+                <div class="card-body">
+                    <a class="btn btn-sm btn-primary" href="@Url.Action("EditGame", "User", new { gameId = Model.Id })">Edit</a>
+                    <button class="btn btn-sm btn-danger" form="del_game_@Model.Id">Delete</button>
+                    @using (Html.BeginForm("DeleteGame", "User", new { id = Model.Id, groupId = Model.GroupId }, FormMethod.Post, htmlAttributes: new { @id = $"del_game_{Model.Id}" }))
+                    {
+                        @Html.AntiForgeryToken();
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="card bg-dark">
+                <div class="card-body">
+                    @if (Model.HtmlVersionLink == null)
+                    {
+                        <a href="@Url.Action("DownloadGame", "Home", new { id = Model.Id })">Download Game!</a>
+                    }
+                    else
+                    {
+                        <ul style="margin: 0px; padding-left: 20px;">
+                            <li><a href="@Url.Action("DownloadGame", "Home", new { id = Model.Id })">Download Game!</a></li>
+                            <li><a href="@Model.HtmlVersionLink" target="_blank">Play Now!</a></li>
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row mt-5">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="card bg-dark">
+                <div class="card-body">
+                    @if (Model.HtmlVersionLink == null)
+                    {
+                        <a href="@Url.Action("DownloadGame", "Home", new { id = Model.Id })">Download Game!</a>
+                    }
+                    else
+                    {
+                        <ul style="margin: 0px; padding-left: 20px;">
+                            <li><a href="@Url.Action("DownloadGame", "Home", new { id = Model.Id })">Download Game!</a></li>
+                            <li><a href="@Model.HtmlVersionLink" target="_blank">Play Now!</a></li>
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $('.gameBody img').each(function () {
+            var currentImage = $(this);
+            currentImage.wrap("<a class='image-link' href='" + currentImage.attr("src") + "'</a>");
+        });
+        $('.image-link').magnificPopup({ type: 'image' });
+    });
+</script>
+
+
